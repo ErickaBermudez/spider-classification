@@ -1,0 +1,11 @@
+inputs = tf.keras.Input(shape=img_size + (3,))
+x = data_augmentation(inputs)
+x = preprocess_input(x)
+
+x = base_model(x, training=False)
+x = global_average_layer(x)
+x = tf.keras.layers.Dropout(0.5)(x)
+x = tf.keras.layers.Dense(1024,activation='relu')(x)
+x = tf.keras.layers.Dropout(0.5)(x)
+outputs = tf.keras.layers.Dense(12)(x)
+model = tf.keras.Model(inputs, outputs)
